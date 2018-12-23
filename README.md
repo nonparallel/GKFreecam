@@ -1,6 +1,13 @@
 # GKFreecam
 A freecam mod for GK by nonparallel, powered by GKML.
 
+# Building Guide:
+Download the source code, and reference these DLLs (from the GK data folder, make sure you also have the modloader!):
+  - 0Harmony.dll
+  - Assembly-CSharp.dll
+  - UnityEngine.dll
+  - GarfieldKartModLoaderLib.dll
+
 # Installation Guide:
 Get the modloader for Garfield Kart and follow the given guide (https://mods.garfieldkart.com/).
 After that, get the latest version of this mod from the releases section and throw it into your mods folder.
