@@ -6,7 +6,7 @@ Download the source code, and reference these DLLs (from the GK data folder, mak
   - 0Harmony.dll
   - Assembly-CSharp.dll
   - UnityEngine.dll
-  - GarfieldKartModLoaderLib.dll
+  - GarfieldKartModLoaderLib.dll  
 Then, of course, build it.
 # Installation Guide:
 Get the modloader for Garfield Kart and follow the given guide from their website. (https://mods.garfieldkart.com/)
