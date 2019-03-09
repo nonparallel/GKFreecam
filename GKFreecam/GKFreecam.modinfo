@@ -2,7 +2,7 @@
 	"Name": "GK Freecam",
 	"Namespace": "GKFreecam",
 	"Authors": ["nonparallel", "nonparallel", "nonparallel"],
-	"Version": "0.1",
+	"Version": "0.2d1",
 	"GKMLVersion": "0.1.1",
 	"Description": "A freecam for GK, made by yours truly; nonparallel!"
 }
