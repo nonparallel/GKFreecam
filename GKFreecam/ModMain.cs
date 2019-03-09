@@ -12,6 +12,8 @@ namespace GKFreecam
 
     public class ModMain : Mod
     {
+        // keep 0.1.1 support in, leave 0.2.0 support for later
+
         public override void LoadMod()
         {
             Console.WriteLine("nonparallel was here (yes, me. it was me all along!); GK Freecam has loaded.");
