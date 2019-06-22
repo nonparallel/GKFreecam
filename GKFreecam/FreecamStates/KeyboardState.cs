@@ -6,26 +6,15 @@ namespace GKFreecam.FreecamStates
     {
         public override void Update()
         {
-            if (Input.GetKey(KeyCode.I))
-                CurrentState.m_Transform.Translate(new Vector3(0f, 0f, 0.5f), Space.Self);
-            if (Input.GetKey(KeyCode.K))
-                CurrentState.m_Transform.Translate(new Vector3(0f, 0f, -0.5f), Space.Self);
-            if (Input.GetKey(KeyCode.J))
-                CurrentState.m_Transform.Translate(new Vector3(-0.5f, 0f, 0f), Space.Self);
-            if (Input.GetKey(KeyCode.L))
-                CurrentState.m_Transform.Translate(new Vector3(0.5f, 0f, 0f), Space.Self);
-            if (Input.GetKey(KeyCode.RightShift))
-                CurrentState.m_Transform.Translate(new Vector3(0f, 0.5f, 0f), Space.Self);
-            if (Input.GetKey(KeyCode.RightControl))
-                CurrentState.m_Transform.Translate(new Vector3(0f, -0.5f, 0f), Space.Self);
-            if (Input.GetKey(KeyCode.UpArrow))
-                CurrentState.m_Transform.Rotate(0.5f, 0f, 0f);
-            if (Input.GetKey(KeyCode.DownArrow))
-                CurrentState.m_Transform.Rotate(-0.5f, 0f, 0f);
-            if (Input.GetKey(KeyCode.LeftArrow))
-                CurrentState.m_Transform.Rotate(0f, -0.5f, 0f);
-            if (Input.GetKey(KeyCode.RightArrow))
-                CurrentState.m_Transform.Rotate(0f, 0.5f, 0f);
+            int _sensitivity = Globals.Config.Sensitivity;
+
+            CurrentState.m_Transform.Translate(new Vector3(InputManager.Instance.GetAction(EAction.Steer), 0f, InputManager.Instance.GetAction(EAction.Accelerate)) / 2f, Space.Self);
+
+            int UpDown = (Utils.BoolToInt(Input.GetKey(KeyCode.UpArrow)) - Utils.BoolToInt(Input.GetKey(KeyCode.DownArrow))) * _sensitivity;
+            int LeftRight = (Utils.BoolToInt(Input.GetKey(KeyCode.RightArrow)) - Utils.BoolToInt(Input.GetKey(KeyCode.LeftArrow))) * _sensitivity;
+
+            CurrentState.m_Transform.Rotate(UpDown, 0f, 0f, Space.Self);
+            CurrentState.m_Transform.Rotate(0f, LeftRight, 0f, Space.World);
         }
     }
 }

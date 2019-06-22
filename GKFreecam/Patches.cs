@@ -30,22 +30,28 @@ namespace GKFreecam
 
         public static void InputCheck()
         {
-            if (Input.GetKeyDown(KeyCode.LeftBracket) && !Globals.InFreecam)
+            if (Input.GetKeyDown(Globals.Config.ActivatorKey))
             {
-                Globals.Freecam.Enter(PTransform, null);
-                Globals.InFreecam = true;
-            }
-            else if (Input.GetKeyDown(KeyCode.LeftBracket) && Globals.InFreecam)
-            {
-                Globals.Freecam.CamState++;
-                if (Globals.Freecam.CamState > Globals.Freecam.States.Count - 1)
+                if (!Globals.InFreecam)
                 {
-                    Globals.Freecam.CamState = 0;
-                    Globals.InFreecam = false;
+                    Globals.Freecam.Enter(PTransform, null);
+                    Globals.InFreecam = true;
+                } else
+                {
+                    Globals.Freecam.States[Globals.Freecam.CamState].OnExit();
+                    Globals.Freecam.CamState++;
+
+                    if (Globals.Freecam.CamState > Globals.Freecam.States.Count - 1)
+                    {
+                        Globals.Freecam.CamState = 0;
+                        Globals.InFreecam = false;
+                    }
+
+                    Globals.Freecam.States[Globals.Freecam.CamState].OnEnter();
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.RightBracket))
+            if (Input.GetKeyDown(Globals.Config.HideCamKey))
             {
                 UICamera.currentCamera.enabled = !UICamera.currentCamera.enabled;
             }
@@ -73,6 +79,8 @@ namespace GKFreecam
         {
             Globals.Freecam.AddState<MouseState>();
             Globals.Freecam.AddState<KeyboardState>();
+            Globals.Freecam.AddState<ControllerState>();
+            Globals.Freecam.AddState<FPSState>();
 
             __instance.gameObject.AddComponent<InputCheckUpdater>();
         }
@@ -80,6 +88,11 @@ namespace GKFreecam
 
     public class InputCheckUpdater : MonoBehaviour
     {
-        public void Update() => FreecamSwitcher.InputCheck();
+        public void Update()
+        {
+            FreecamSwitcher.InputCheck();
+            if (Input.GetMouseButtonDown(0))
+                Globals.LMOrigin = Input.mousePosition;
+        }
     }
 }

@@ -2,6 +2,9 @@
 using GKML;
 using UnityEngine;
 using System;
+using System.IO;
+using Newtonsoft.Json;
+using GKFreecam.Metadata;
 
 namespace GKFreecam
 {
@@ -12,11 +15,16 @@ namespace GKFreecam
 
     public class ModMain : Mod
     {
-        // keep 0.1.1 support in, leave 0.2.0 support for later
+        // m,y dick
 
-        public override void LoadMod()
+        public override void PostInit()
         {
             Console.WriteLine("nonparallel was here (yes, me. it was me all along!); GK Freecam has loaded.");
+
+            if (!File.Exists(Globals.JSONLocation))
+                File.WriteAllText(Globals.JSONLocation, JsonConvert.SerializeObject(new JSONConfig(), Formatting.Indented));
+
+            Globals.Config = JsonConvert.DeserializeObject<JSONConfig>(File.ReadAllText(Globals.JSONLocation));
         }
     }
 }

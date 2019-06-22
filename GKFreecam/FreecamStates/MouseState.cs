@@ -4,7 +4,7 @@ namespace GKFreecam.FreecamStates
 {
     public class MouseState : StateBase
     {
-        private Vector3 _mOrigin;
+        private Vector3 _mOrigin { get => Globals.LMOrigin; }
         private Vector3 _mDelta;
 
         public Vector3 GetMouseVel() => Input.mousePosition - _mDelta;
@@ -12,19 +12,17 @@ namespace GKFreecam.FreecamStates
 
         public override void Update()
         {
+            int _sensitivity = Globals.Config.Sensitivity;
             Vector3 _vel = Vector3.zero;
 
-            if (Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(0))
-                _mOrigin = Input.mousePosition;
-
             if (Input.GetMouseButton(1))
-                CurrentState.m_Transform.eulerAngles = Vector3.SmoothDamp(CurrentState.m_Transform.eulerAngles, CurrentState.m_Transform.eulerAngles + GetMouseRotationVel(), ref _vel, 0.25f);
+                CurrentState.m_Transform.eulerAngles = Vector3.SmoothDamp(CurrentState.m_Transform.eulerAngles, CurrentState.m_Transform.eulerAngles + GetMouseRotationVel() * _sensitivity, ref _vel, 0.25f);
 
             if (Input.GetMouseButton(0))
-                CurrentState.m_Transform.Translate(UICamera.mainCamera.ScreenToViewportPoint(Input.mousePosition - _mOrigin), Space.Self);
+                CurrentState.m_Transform.Translate(UICamera.mainCamera.ScreenToViewportPoint(Input.mousePosition - _mOrigin) * _sensitivity, Space.Self);
 
             if (Input.GetMouseButton(2))
-                CurrentState.m_Transform.Translate(new Vector3(0f, 0f, 0.25f), Space.Self);
+                CurrentState.m_Transform.Translate(new Vector3(0f, 0f, _sensitivity), Space.Self);
 
             _mDelta = Input.mousePosition;
         }

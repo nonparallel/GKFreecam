@@ -20,6 +20,7 @@ namespace GKFreecam.Classes
 
         public List<StateBase> States = new List<StateBase>();
 
+
         public void AddState<T>() where T : StateBase
         {
             T _state = Activator.CreateInstance<T>();
@@ -32,11 +33,6 @@ namespace GKFreecam.Classes
         {
             States[CamState].Update();
             return state;
-        }
-
-        public void CSThree()
-        {
-            
         }
     }
 }
